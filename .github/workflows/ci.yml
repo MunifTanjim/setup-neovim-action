@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-nightly:
+    name: test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Neovim
+        uses: ./
+        with:
+          tag: nightly
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          nvim --headless --noplugin -c 'quit'
+
+          nvim --version
