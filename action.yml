@@ -1,0 +1,18 @@
+name: 'Setup Neovim'
+description: 'Setup Neovim on GitHub Actions.'
+author: 'MunifTanjim'
+branding:
+  color: 'green'
+  icon: 'package'
+inputs:
+  tag:
+    description: 'Neovim release tag. For list of available tags, check: https://github.com/neovim/neovim/tags'
+    default: 'stable'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - run: ${{ github.action_path }}/setup.sh
+      shell: bash
+      env:
+        INPUT_TAG: ${{ inputs.tag }}
