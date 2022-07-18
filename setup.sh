@@ -75,13 +75,15 @@ function get_latest_reposiotry() {
 }
 
 function setup_from_source() {
-  get_latest_reposiotry "${repo_url}" "${REPOS_DIR}/neovim" "${branch}"
+  get_latest_reposiotry "${repo_url}" "${REPOS_DIR}/neovim"
   pushd "${REPOS_DIR}/neovim" >/dev/null
 
   local ref="stable"
   if git tag --list | grep -q "${tag}"; then
     ref="${tag}"
   elif test "${tag}" = "nightly"; then
+    ref="master"
+  elif test "${tag}" = "source"; then
     ref="master"
   fi
   git checkout "${ref}"
@@ -134,4 +136,8 @@ function setup_prebuilt_package() {
 
 mkdir -p "${INSTALLATION_DIR}"
 
-setup_prebuilt_package
+if test "${tag}" = "source"; then
+  setup_from_source
+else
+  setup_prebuilt_package
+fi

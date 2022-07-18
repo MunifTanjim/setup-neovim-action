@@ -6,7 +6,7 @@ Setup Neovim on Github Actions.
 
 See [action.yml](./action.yml)
 
-**Basic:**
+**Basic (stable release):**
 
 ```yml
 steps:
@@ -27,6 +27,21 @@ steps:
   - run: |
       nvim --version
 ```
+
+For list of available tags, check: https://github.com/neovim/neovim/tags
+
+**Compile from Source:**
+
+```yml
+steps:
+  - uses: actions/checkout@v2
+  - uses: MunifTanjim/setup-neovim-action@v1
+    with:
+      tag: source
+  - run: |
+      nvim --version
+```
+
 ## License
 
 Licensed under the MIT License. Check the [LICENSE](./LICENSE) file for details.

@@ -7,8 +7,26 @@ on:
     branches: [main]
 
 jobs:
+  test-source:
+    name: Build Neovim from Source
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Neovim
+        uses: ./
+        with:
+          tag: source
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          nvim --headless --noplugin -c 'quit'
+
+          nvim --version
   test-nightly:
-    name: test
+    name: Install Neovim Nightly 
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -17,6 +35,24 @@ jobs:
         uses: ./
         with:
           tag: nightly
+      - name: Validate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          nvim --headless --noplugin -c 'quit'
+
+          nvim --version
+  test-stable:
+    name: Install Neovim Stable
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Neovim
+        uses: ./
+        with:
+          tag: stable
       - name: Validate
         shell: bash
         run: |
